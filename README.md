@@ -1,10 +1,10 @@
-# pld-client-php
+# pld-client-php-8
 
 La API de Prevención de Lavado de Dinero (PLD) consulta a una persona en las listas de Personas Políticamente Expuestas (PEPs) y Personas vinculadas a Lavado de Dinero.
 
 ## Requisitos
 
-PHP 7.1 ó superior
+PHP 8.1 ó superior
 
 ### Dependencias adicionales
 - Se debe contar con las siguientes dependencias de PHP:
@@ -13,9 +13,9 @@ PHP 7.1 ó superior
 - En caso de no ser así, para linux use los siguientes comandos
 
 ```sh
-#ejemplo con php en versión 7.3 para otra versión colocar php{version}-curl
-apt-get install php7.3-curl
-apt-get install php7.3-mbstring
+#ejemplo con php en versión 8.1 para otra versión colocar php{version}-curl
+apt-get install curl
+apt-get install php8.1-mbstring
 ```
 - Composer [vea como instalar][1]
 
@@ -128,7 +128,7 @@ Es importante contar con el setUp() que se encargará de firmar y verificar la p
 public function setUp()
 {
     $password = getenv('KEY_PASSWORD');
-    $this->signer = new Signer\Manager\Interceptor\KeyHandler(null, null, $password);
+    $this->signer = new Signer\Manager\Interceptor\KeyHandler('your-keystore.p12', 'circulo_credito-certificate.pem', $password);
     $events = new Signer\Manager\Interceptor\MiddlewareEvents($this->signer);
     $handler = \GuzzleHttp\HandlerStack::create();
     $handler->push($events->add_signature_header('x-signature'));
